@@ -28,11 +28,11 @@ const port = 8080
 const users = new UserMongo()
 const products = new ProdMongo()
 
-
 mongoose.connect(config.mongo_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+console.log(config.mongo_url)
 
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -65,18 +65,18 @@ app.use(loggerMiddleware);
 const httpServer = app.listen(port, () => {
     console.log(`Servidor corriendo en el puerto ${port}`)
 })
-//---------------------------------------Socket.io-----------------------------------//
+//Socket.io//
 
 const socketServer = new Server(httpServer)
 
-//-------------------------------Prueba conexión-------------------------------------------//
+//Prueba conexión//
 socketServer.on("connection", socket => {
     console.log("Socket Conectado")
-//------Recibir información del cliente----------//
+//Recibir información del cliente//
     socket.on("message", data => {
         console.log(data)
     })
-//-----------------------------------------------//
+
 
     socket.on("newProd", (newProduct) => {
         let validUserPremium = users.getUserRoleByEmail(newProduct.owner)
@@ -133,7 +133,7 @@ socketServer.on("connection", socket => {
 
     socket.on("newEmail", async({email, comment}) => {
         let result = await transport.sendMail({
-            from:'Chat Correo <bast.s.rojas@gmail.com>',
+            from:'Chat Correo <shirleytique911@gmail.com>',
             to:email,
             subject:'Correo con Socket y Nodemailer',
             html:`
@@ -145,9 +145,9 @@ socketServer.on("connection", socket => {
         })
         socketServer.emit("success", "Correo enviado correctamente");
     });
-//-----------------------------Enviar información al cliente----------------------------------//
+//Enviar información al cliente//
     socket.emit("test","mensaje desde servidor a cliente, se valida en consola de navegador")
-//--------------------------------------------------------------------------------------------//
+
 })
 //Prueba Back con endpoint
 app.use("/carts", cartsRouter)
@@ -302,8 +302,8 @@ app.post('/forgot-password', async (req, res) => {
         res.sendFile('index.html', { root: app.get('views') });
     }
   });
-//-----------------------------------Cambiar Contraseña--------------------------------//
-//-----------------------------------Mocking--------------------------------//
+//Cambiar Contraseña-//
+//Mocking//
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
@@ -315,7 +315,7 @@ app.get("/mockingproducts", async(req,res)=>{
         const product = {
             id: nanoid(),
             description: `Product ${i + 1}`,
-            // image: 'https://example.com/image.jpg',
+ 
             price: getRandomNumber(1, 1000),
             stock: getRandomNumber(1, 100),
             category: `Category ${i % 5 + 1}`,

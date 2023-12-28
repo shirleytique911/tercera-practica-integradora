@@ -9,7 +9,7 @@ export class Tickets{}
 switch (config.persistence) {
     case "MONGO":
         const connection = mongoose.connect(config.mongo_url)
-        mongoose.connect(process.env.MONGOURL)
+        mongoose.connect(process.env.mongo_url)
         const { default: CartsMongo } = await import('./mongo/carts.mongo.js')
         const { default: ProductsMongo } = await import('./mongo/products.mongo.js')
         const { default: UsersMongo } = await import('./mongo/users.mongo.js')

@@ -1,5 +1,5 @@
 import { Router } from "express";
-// import { Carts } from '../dao/factory.js'
+
 import CartDTO from "../dao/DTOs/cart.dto.js";
 import TicketDTO from "../dao/DTOs/ticket.dto.js";
 import { ticketService, cartService, userService } from "../repositories/index.js";
@@ -35,31 +35,7 @@ router.post("/", async (req, res) => {
 router.post("/:cid/purchase", async (req, res) => {
     try {
         let id_cart = req.params.cid;
-        //Body para probar el middleware
-        //ruta  http://localhost:8080/carts/6566bc4357f010e82f16b9a1/purchase
-        //la prueba se realizó con un carrito vacio enviando los productos que se compraron
-        // se crea el ticket respectivo y se resta el stock si se valida disponibilidada
-        // {
-        //     "productos": [
-        //       {
-        //         "description": "Producto 2",
-        //         "image": "imagen1.jpg",
-        //         "price": 200,
-        //         "stock": 5,
-        //         "category": "Electrónicos",
-        //         "availability": "in_stock"
-        //       },
-        //       {
-        //         "description": "algo2",
-        //         "image": "imagen3.jpg",
-        //         "price": 100,
-        //         "stock": 5,
-        //         "category": "Electrónicos",
-        //         "availability": "in_stock"
-        //       }
-        //     ],
-        //     "correo": "correo@example.com"
-        //   }
+       
         const productos = req.body.productos;
         const correo = req.body.correo;
         let cart = cartService.validateCart(id_cart)
